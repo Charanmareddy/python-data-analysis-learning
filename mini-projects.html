@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B1120">
+  <meta name="description" content="Beginner Python data analysis projects with runnable Pandas, NumPy, Matplotlib, and Seaborn examples.">
+  <title>Mini Projects | DataLab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script>
+</head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="index.html" aria-label="DataLab home"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Toggle navigation</span><span aria-hidden="true">☰</span></button><nav class="primary-nav" id="primary-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="about.html">About</a><div class="nav-group"><a class="nav-link" href="pandas.html">Libraries <span aria-hidden="true">⌄</span></a><div class="nav-dropdown"><a href="pandas.html">Pandas</a><a href="numpy.html">NumPy</a><a href="matplotlib.html">Matplotlib</a><a href="seaborn.html">Seaborn</a></div></div><a class="nav-link" href="practice.html">Practice</a><a class="nav-link active" aria-current="page" href="mini-projects.html">Projects</a><a class="nav-link" href="interview-questions.html">Interview prep</a><a class="nav-link" href="cheat-sheet.html">Cheat sheet</a><a class="nav-link" href="contact.html">Contact</a></nav><a class="header-cta" href="pandas.html">Start learning <span aria-hidden="true">↗</span></a></header>
+<main id="main" class="page-wrap">
+<section class="page-hero"><p class="eyebrow">PROJECT WORKSHOP</p><h1>Learn by solving <span class="gradient-text">a real question.</span></h1><p class="lesson-lede">Each project below includes a complete example you can run, a small dataset, explanations of the steps, and a guide to reading the result. The sample data is fictional and included directly in the code.</p><p class="lesson-lede">Install the tools once with <code>pip install pandas numpy matplotlib seaborn</code>. Run one project at a time in a notebook or a Python file.</p></section>
+<div class="project-list">
+<article class="project-card" id="retail-project"><span class="card-index">01 / RETAIL · PANDAS + NUMPY + CHARTS</span><h2>What are our best-selling product categories?</h2><p>We will combine order details with a product lookup, calculate monthly revenue, flag months around the typical total, and chart the category trends.</p><div class="project-tools"><b>Pandas</b><span>combine and summarize the tables</span><b>NumPy</b><span>label totals using a threshold</span><b>Matplotlib</b><span>add chart titles and labels</span><b>Seaborn</b><span>draw the category trend lines</span></div>
+<details><summary>Step 1: Understand the small dataset</summary><p>Each order row has a date, product, quantity, and unit price. A second table maps each product to a category. Revenue means quantity multiplied by unit price.</p></details>
+<details><summary>Step 2: Run the complete example</summary><pre class="code-block"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# A few example order lines, not real customer data.
+orders = pd.DataFrame({
+    "date": ["2025-01-05", "2025-01-18", "2025-02-03",
+             "2025-02-16", "2025-03-02", "2025-03-20"],
+    "product": ["Coffee", "Tea", "Coffee", "Bread", "Tea", "Bread"],
+    "units": [10, 6, 12, 8, 10, 12],
+    "unit_price": [3.00, 4.00, 3.00, 2.00, 4.00, 2.00],
+})
+products = pd.DataFrame({
+    "product": ["Coffee", "Tea", "Bread"],
+    "category": ["Beverages", "Beverages", "Bakery"],
+})
+
+# Add category labels to each order using the product name.
+orders = pd.merge(orders, products, on="product", how="left")
+orders["date"] = pd.to_datetime(orders["date"])
+orders["revenue"] = orders["units"] * orders["unit_price"]
+orders["month"] = orders["date"].dt.strftime("%b")
+
+# Add the months in calendar order so the chart reads left to right.
+month_order = ["Jan", "Feb", "Mar"]
+orders["month"] = pd.Categorical(
+    orders["month"], categories=month_order, ordered=True
+)
+monthly = (orders.groupby(["month", "category"], observed=True,
+                          as_index=False)["revenue"].sum())
+monthly_totals = monthly.groupby("month", observed=True)["revenue"].sum()
+
+# NumPy compares each month's total with the median monthly total.
+threshold = np.median(monthly_totals.to_numpy())
+monthly_summary = monthly_totals.rename("revenue").reset_index()
+monthly_summary["sales_level"] = np.where(
+    monthly_summary["revenue"] &gt;= threshold, "At or above typical", "Below typical"
+)
+print(monthly_summary.to_string(index=False))
+
+# Seaborn draws the data; Matplotlib adds the labels and title.
+ax = sns.lineplot(data=monthly, x="month", y="revenue",
+                  hue="category", marker="o")
+ax.set(title="Monthly revenue by product category",
+       xlabel="Month", ylabel="Revenue (USD)")
+plt.tight_layout()
+plt.show()</code></pre><p class="form-note">In a Python file, type <code>&gt;=</code> as shown in the code itself; the angle brackets are displayed safely here.</p></details>
+<details><summary>Step 3: Read the result</summary><p>The monthly totals are January <b>$54</b>, February <b>$52</b>, and March <b>$64</b>. Their median is <b>$54</b>, so January and March are labeled “At or above typical,” while February is “Below typical.” The chart shows beverage and bakery revenue separately.</p><p><b>Why the steps matter:</b> the merge attaches readable categories; the grouping adds revenue within each month and category; NumPy applies a simple threshold. The example is tiny, so the trend is only a practice example—not a business conclusion.</p></details>
+<details><summary>Try changing the project</summary><ol><li>Add another order row and check how both summaries change.</li><li>Change one unit price, then explain which month and category changed.</li><li>Replace the median threshold with a target you choose and explain why.</li><li>What could go wrong if the product lookup contained two rows for the same product?</li></ol></details></article>
+
+<article class="project-card" id="student-project"><span class="card-index">02 / STUDENT OUTCOMES · PANDAS + NUMPY + CHARTS</span><h2>How do study hours relate to assessment scores?</h2><p>We will handle a missing score, calculate a typical score and percentile, flag scores for review, and make a scatterplot. This explores association; it cannot prove that study hours caused a score.</p><div class="project-tools"><b>Pandas</b><span>inspect and clean student rows</span><b>NumPy</b><span>calculate a percentile and make labels</span><b>Matplotlib</b><span>label the chart for readers</span><b>Seaborn</b><span>show study hours against scores</span></div>
+<details><summary>Step 1: Understand the small dataset</summary><p>Each row is a fictional student record. One score is missing to demonstrate a clear cleaning decision. The analysis excludes that row only from score-based calculations.</p></details>
+<details><summary>Step 2: Run the complete example</summary><pre class="code-block"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+students = pd.DataFrame({
+    "student": ["A", "B", "C", "D", "E", "F"],
+    "study_hours": [2, 4, 6, 3, 5, 1],
+    "score": [65, 80, 92, 70, 88, np.nan],
+})
+
+# Keep the original table and make a score-complete analysis table.
+scored = students.dropna(subset=["score"]).copy()
+scored["score"] = scored["score"].astype(int)
+
+average_score = np.mean(scored["score"].to_numpy())
+score_75th = np.percentile(scored["score"].to_numpy(), 75)
+scored["review"] = np.where(scored["score"] &gt;= 75,
+                            "Meets practice target", "Review")
+
+print(f"Students with scores: {len(scored)}")
+print(f"Average score: {average_score:.1f}")
+print(f"75th percentile: {score_75th:.1f}")
+print(scored[["student", "score", "review"]].to_string(index=False))
+
+ax = sns.scatterplot(data=scored, x="study_hours", y="score")
+ax.set(title="Study hours and assessment score",
+       xlabel="Reported study hours", ylabel="Assessment score (out of 100)")
+plt.tight_layout()
+plt.show()</code></pre><p class="form-note">The target of 75 is an example practice threshold. It is not a recommended grading rule.</p></details>
+<details><summary>Step 3: Read the result</summary><p>Five students have recorded scores. Their average is <b>79.0</b>, and the 75th percentile is <b>88.0</b>. The labels mark scores of 75 or higher for practice review. The scatterplot places each scored student by study hours and score.</p><p><b>Interpret carefully:</b> this tiny dataset cannot tell us that studying more caused a higher score. Other factors may matter, and self-reported hours may be inaccurate.</p></details>
+<details><summary>Try changing the project</summary><ol><li>Change the example target from 75 to 80 and recount the labels.</li><li>Add a student with a missing score. Confirm the scored count does not include them.</li><li>Describe the points without claiming one variable causes the other.</li><li>What extra information would help interpret these results fairly?</li></ol></details></article>
+
+<article class="project-card" id="hospital-project"><span class="card-index">03 / HOSPITAL SERVICE · PANDAS + NUMPY + CHARTS</span><h2>Where are patient waits longest?</h2><p>We will summarize fictional waiting times by department, calculate a high percentile, and chart the distribution so both typical and unusually long waits are visible.</p><div class="project-tools"><b>Pandas</b><span>organize and group wait records</span><b>NumPy</b><span>calculate the 90th percentile</span><b>Matplotlib</b><span>format and label the figure</span><b>Seaborn</b><span>compare department distributions</span></div>
+<details><summary>Step 1: Understand the small dataset</summary><p>Each row represents one fictional visit. Waiting time is measured in minutes. Do not use identifiable patient information in learning projects.</p></details>
+<details><summary>Step 2: Run the complete example</summary><pre class="code-block"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+visits = pd.DataFrame({
+    "department": ["Emergency", "Emergency", "Emergency", "Emergency",
+                   "Clinic", "Clinic", "Clinic", "Clinic"],
+    "wait_minutes": [18, 35, 42, 12, 10, 25, 30, 15],
+})
+
+# Summarize the middle wait and a high-wait threshold by department.
+summary = visits.groupby("department")["wait_minutes"].agg(
+    median_wait="median",
+    p90_wait=lambda values: np.percentile(values.to_numpy(), 90),
+).reset_index()
+print(summary.to_string(index=False, formatters={
+    "median_wait": "{:.1f}".format,
+    "p90_wait": "{:.1f}".format,
+}))
+
+# Show every observation's distribution rather than only one average.
+ax = sns.boxplot(data=visits, x="department", y="wait_minutes")
+ax.set(title="Patient waiting time by department",
+       xlabel="Department", ylabel="Wait (minutes)")
+plt.tight_layout()
+plt.show()</code></pre></details>
+<details><summary>Step 3: Read the result</summary><p>The emergency department has a median wait of <b>26.5 minutes</b>; the clinic median is <b>20.0 minutes</b>. The clinic 90th percentile is <b>28.5 minutes</b> and the emergency 90th percentile is <b>39.9 minutes</b>. The boxplot compares the spreads, while the 90th percentile focuses on a high-wait threshold. Each department has only four example visits, so the results are illustrative and not reliable service estimates.</p><p><b>Why show more than a median?</b> Two departments can have similar typical waits but different long-wait experiences. The boxplot and percentile help raise questions for further investigation.</p></details>
+<details><summary>Try changing the project</summary><ol><li>Add a longer wait and observe how the 90th percentile changes.</li><li>Compare the median and 90th percentile. What does each tell you?</li><li>What additional dates or shift information would you want before making a recommendation?</li><li>Explain why four visits per department are not enough to judge overall performance.</li></ol></details></article>
+</div>
+<section class="content-panel"><p class="eyebrow">A GOOD PROJECT HABIT</p><h2>Explain the question, the code, and the limits</h2><p>A useful analysis is more than a chart. State what the sample contains, how you handled missing or unusual values, what the output says, and what it cannot tell you.</p></section>
+</main><footer class="site-footer"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a><p>Practical Python for people learning data analysis.</p><span class="footer-meta">LEARN · EXPLORE · PRACTICE</span></footer>
+</body></html>
+

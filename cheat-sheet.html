@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0B1120"><meta name="description" content="Beginner-friendly Cheat Sheet resources for Python data analysis with clear examples and practice."><title>Cheat Sheet | DataLab</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/styles.css"><script src="assets/js/main.js" defer></script></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><a class="brand" href="index.html" aria-label="DataLab home"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Toggle navigation</span><span aria-hidden="true">☰</span></button><nav class="primary-nav" id="primary-nav" aria-label="Main navigation"><a class="nav-link" href="index.html">Home</a><a class="nav-link" href="about.html">About</a><div class="nav-group"><a class="nav-link" href="pandas.html">Libraries <span aria-hidden="true">⌄</span></a><div class="nav-dropdown"><a href="pandas.html">Pandas</a><a href="numpy.html">NumPy</a><a href="matplotlib.html">Matplotlib</a><a href="seaborn.html">Seaborn</a></div></div><a class="nav-link" href="practice.html">Practice</a><a class="nav-link" href="mini-projects.html">Projects</a><a class="nav-link" href="interview-questions.html">Interview prep</a><a class="nav-link" href="cheat-sheet.html">Cheat sheet</a><a class="nav-link" href="contact.html">Contact</a></nav><a class="header-cta" href="pandas.html">Start learning <span aria-hidden="true">↗</span></a></header><main id="main" class="page-wrap"><section class="page-hero"><p class="eyebrow">QUICK REFERENCE</p><h1>Keep the essentials <span class="gradient-text">close at hand.</span></h1><p class="lesson-lede">A compact reminder of common workflows. Open each library guide for parameters, examples, and caveats.</p></section><section class="cheat-grid"><article class="cheat-card"><p class="eyebrow">PANDAS / TABLES</p><h2>Inspect and summarize</h2><pre><code>import pandas as pd
+
+df = pd.read_csv("sales.csv")
+df.head()
+df.info()
+df.loc[df["region"] == "West"]
+df.groupby("region")["revenue"].sum()
+pd.merge(orders, customers,
+         on="customer_id", how="left")</code></pre><a class="text-link" href="pandas.html">Pandas guide →</a></article><article class="cheat-card"><p class="eyebrow">NUMPY / NUMBERS</p><h2>Build and calculate</h2><pre><code>import numpy as np
+
+values = np.array([12, 15, 18])
+values.shape
+np.mean(values)
+np.sum(values)
+np.where(values >= 15, "Meet", "Below")
+np.linspace(0, 100, num=5)</code></pre><a class="text-link" href="numpy.html">NumPy guide →</a></article><article class="cheat-card"><p class="eyebrow">MATPLOTLIB / CHARTS</p><h2>Build and export</h2><pre><code>import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+ax.plot(months, revenue, marker="o")
+ax.set_title("Monthly revenue")
+ax.set_xlabel("Month")
+ax.set_ylabel("Revenue (USD)")
+fig.savefig("revenue.png", dpi=160,
+            bbox_inches="tight")</code></pre><a class="text-link" href="matplotlib.html">Matplotlib guide →</a></article><article class="cheat-card"><p class="eyebrow">SEABORN / STATISTICS</p><h2>Explore a DataFrame</h2><pre><code>import seaborn as sns
+
+sns.set_theme(style="whitegrid")
+sns.scatterplot(data=customers,
+                x="visits", y="spend",
+                hue="segment")
+sns.boxplot(data=staff,
+            x="team", y="salary")</code></pre><a class="text-link" href="seaborn.html">Seaborn guide →</a></article></section><section class="content-panel"><h2>A reliable analysis rhythm</h2><p>Ask a question → inspect data → clean carefully → calculate → visualize → explain assumptions and limits.</p></section></main><footer class="site-footer"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a><p>Practical Python for people learning data analysis.</p><span class="footer-meta">LEARN · EXPLORE · PRACTICE</span></footer></body></html>
+
+

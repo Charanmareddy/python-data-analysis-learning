@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B1120">
+  <meta name="description" content="A beginner-friendly, interactive path to learning Python libraries for data analysis: Pandas, NumPy, Matplotlib, and Seaborn.">
+  <title>DataLab — Python for Data Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="DataLab home"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">Toggle navigation</span><span aria-hidden="true">☰</span></button><nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="index.html" aria-current="page">Home</a>
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="pandas.html">Libraries <span aria-hidden="true">⌄</span></a>
+      <div class="nav-group"><a class="nav-link" href="pandas.html">Libraries <span aria-hidden="true">⌄</span></a><div class="nav-dropdown"><a href="pandas.html">Pandas</a><a href="numpy.html">NumPy</a><a href="matplotlib.html">Matplotlib</a><a href="seaborn.html">Seaborn</a></div></div><a class="nav-link" href="practice.html">Practice</a><a class="nav-link" href="mini-projects.html">Projects</a><a class="nav-link" href="cheat-sheet.html">Cheat sheet</a><a class="nav-link" href="contact.html">Contact</a>
+      <a class="nav-link" href="interview-questions.html">Interview prep</a>
+    </nav>
+    <a class="header-cta" href="pandas.html">Start learning <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero section-wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> YOUR DATA ANALYSIS LEARNING PATH</p>
+        <h1 id="hero-title">Make sense of data.<br><span class="gradient-text">One step at a time.</span></h1>
+        <p class="hero-description">Learn the Python tools analysts use every day—with clear explanations, practical examples, and room to practice.</p>
+        <div class="hero-actions"><a class="button button-primary" href="pandas.html">Explore the libraries <span aria-hidden="true">→</span></a><a class="button button-quiet" href="#learning-path">See the learning path <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-note"><span class="note-icon" aria-hidden="true">✳</span><span>New to Python? You’re in the right place.<br><span class="muted">Start with the basics. Build confidence as you go.</span></span></div>
+      </div>
+      <div class="hero-visual" aria-label="Illustration of a data table transforming into a chart">
+        <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+        <div class="data-window glass-card">
+          <div class="window-top"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><span>monthly_sales.csv</span><span class="window-menu" aria-hidden="true">•••</span></div>
+          <div class="code-line"><span class="code-purple">import</span> pandas <span class="code-purple">as</span> pd</div>
+          <div class="code-line"><span class="code-muted"># Take a first look at the data</span></div>
+          <div class="code-line">sales = pd.<span class="code-cyan">read_csv</span>(<span class="code-green">"monthly_sales.csv"</span>)</div>
+          <div class="code-line">sales.<span class="code-cyan">head</span>()</div>
+          <div class="table-preview"><div class="table-row table-head"><span>month</span><span>region</span><span>revenue</span></div><div class="table-row"><span>Jan</span><span>North</span><span>12,400</span></div><div class="table-row"><span>Feb</span><span>West</span><span>15,800</span></div><div class="table-row"><span>Mar</span><span>North</span><span>14,200</span></div></div>
+          <div class="chart-label"><span class="chart-indicator" aria-hidden="true"></span> Revenue by month <span class="chart-unit">USD</span></div>
+          <div class="mini-chart" role="img" aria-label="A rising line chart showing monthly revenue increasing"><span class="chart-grid"></span><svg viewBox="0 0 360 74" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#00E5FF" stop-opacity=".24"/><stop offset="1" stop-color="#00E5FF" stop-opacity="0"/></linearGradient></defs><path d="M0 60 C35 54 42 45 76 49 S124 40 150 43 S199 25 225 32 S274 10 300 20 S334 4 360 8 V74 H0Z" fill="url(#chartFill)"/><path d="M0 60 C35 54 42 45 76 49 S124 40 150 43 S199 25 225 32 S274 10 300 20 S334 4 360 8" fill="none" stroke="#00E5FF" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg></div>
+          <div class="chart-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+        </div>
+        <div class="float-tag tag-pandas"><span class="tag-symbol">▦</span> Pandas</div><div class="float-tag tag-plot"><span class="tag-symbol">⌁</span> Matplotlib</div>
+      </div>
+    </section>
+
+    <section class="learning-section section-wrap" id="learning-path" aria-labelledby="path-title">
+      <div class="section-heading"><div><p class="eyebrow">A CLEAR PATH THROUGH THE DATA STACK</p><h2 id="path-title">Four tools. One learning journey.</h2></div><p class="section-intro">Each library has a focused guide, so you can learn what it does and when to reach for it.</p></div>
+      <div class="library-grid">
+        <a class="library-card" href="pandas.html"><span class="library-icon pandas-icon" aria-hidden="true">▤</span><span class="card-index">01 / TABLES</span><h3>Pandas</h3><p>Organize, clean, and explore data in tables that feel familiar.</p><span class="card-link">Explore Pandas <span aria-hidden="true">↗</span></span></a>
+        <a class="library-card" href="numpy.html"><span class="library-icon numpy-icon" aria-hidden="true">⠿</span><span class="card-index">02 / NUMBERS</span><h3>NumPy</h3><p>Work with groups of numbers and calculate efficiently.</p><span class="card-link">Explore NumPy <span aria-hidden="true">↗</span></span></a>
+        <a class="library-card" href="matplotlib.html"><span class="library-icon matplotlib-icon" aria-hidden="true">⌁</span><span class="card-index">03 / CHARTS</span><h3>Matplotlib</h3><p>Build charts that help you see patterns and explain results.</p><span class="card-link">Explore Matplotlib <span aria-hidden="true">↗</span></span></a>
+        <a class="library-card" href="seaborn.html"><span class="library-icon seaborn-icon" aria-hidden="true">◌</span><span class="card-index">04 / INSIGHTS</span><h3>Seaborn</h3><p>Make clear, polished statistical charts with less setup.</p><span class="card-link">Explore Seaborn <span aria-hidden="true">↗</span></span></a>
+      </div>
+    </section>
+
+    <section class="path-callout section-wrap" aria-labelledby="start-title"><div class="callout-card"><div><p class="eyebrow">NO EXPERIENCE NEEDED</p><h2 id="start-title">Start curious.<br>Leave more confident.</h2><p>Follow the guides in order, try a short exercise, and use your new skills on a small project.</p></div><div class="callout-steps" aria-label="Learning steps"><div><span>01</span><b>Learn the idea</b><small>Plain language, one concept at a time</small></div><div><span>02</span><b>See it in action</b><small>Examples based on everyday data</small></div><div><span>03</span><b>Try it yourself</b><small>Practice questions and mini projects</small></div></div></div></section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">D</span><span>data<span class="brand-accent">lab</span></span></a><p>Practical Python for people learning data analysis.</p><span class="footer-meta">LEARN · EXPLORE · PRACTICE</span></footer>
+</body>
+</html>
+
+
